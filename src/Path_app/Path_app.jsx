@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import Node from './Node/Node';
 import {dijkstra, getNodesInShortestPathOrderDijkstra} from '../algorithms/dijkstra';
 import {astar, getNodesInShortestPathOrderAstar} from '../algorithms/astar';
+import {prim} from '../algorithms/prim';
 
 import './Path_app.css';
 
-let START_NODE_ROW = 9;
-let START_NODE_COL = 14;
+let START_NODE_ROW = 10;
+let START_NODE_COL = 15;
 let FINISH_NODE_ROW = 10;
 let FINISH_NODE_COL = 35;
 
@@ -86,7 +87,6 @@ export default class PathfindingVisualizer extends Component {
   }
 
   handleMouseUp(row, col) {
-    console.log('a');
     nodeWasPressed = true;
     CHANGE_START = false;
     CHANGE_FINISH = false;
@@ -99,8 +99,6 @@ export default class PathfindingVisualizer extends Component {
       const newGrid = updateWeight(this.state.grid, row, col);
       this.setState({grid: newGrid});
     }
-
-    console.log(row, col);
   }
 
   animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder) {
@@ -235,19 +233,22 @@ export default class PathfindingVisualizer extends Component {
     }
   }
 
-  addtext(val) {
-    console.log(document.getElementById("myRange").value);
-    document.getElementById("demo").innerHTML = val;  
-  }
-
   pressOutside() {
-    console.log('b');
     if(nodeWasPressed === false) 
     {
       this.setState({weightIsPressed: 1});
       weightValue = 1;
     }
     nodeWasPressed = false;
+  }
+
+  generateMaze() {
+    this.clearGraph();
+    const {grid} = this.state;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    
+    this.setState({grid: prim(grid, startNode, finishNode)});
   }
 
   render() {
@@ -266,11 +267,11 @@ export default class PathfindingVisualizer extends Component {
           <button className="start-button" onClick={() => this.visualizeAstar()}>
             Visualize A* Algorithm
           </button>
+          <button className="start-button" onClick={() => this.generateMaze()}>
+            Generate Random Maze
+          </button>
           <button className="start-button" onClick={() => this.clearGraph()}>
             Clear
-          </button>
-          <button className="start-button" onClick={() => window.location.reload()}>
-            Restart
           </button>
         </nav>
         

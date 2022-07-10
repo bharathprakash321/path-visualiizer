@@ -6,7 +6,7 @@ import {astar, getNodesInShortestPathOrderAstar} from '../algorithms/astar';
 import './Path_app.css';
 
 let START_NODE_ROW = 10;
-let START_NODE_COL = 15;
+let START_NODE_COL = 14;
 let FINISH_NODE_ROW = 10;
 let FINISH_NODE_COL = 35;
 

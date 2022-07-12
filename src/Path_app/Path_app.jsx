@@ -258,7 +258,7 @@ export default class PathfindingVisualizer extends Component {
       : '';
 
     return (
-      <div className={`${extraClassName}`}  onKeyUp={() => this.pressOutside()} onMouseUp={() => this.pressOutside()}>
+      <div id='container' className={`${extraClassName}`}  onKeyUp={() => this.pressOutside()} onMouseUp={() => this.pressOutside()}>
         <nav>
           <div className='bg-image'></div>
           <button className="start-button" onClick={() => this.visualizeDijkstra()}>
